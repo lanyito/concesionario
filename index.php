@@ -1,7 +1,17 @@
 <?php
-// Incluir el header
 include 'includes/header.php';
+
+$conexion = mysqli_connect('localhost', 'root', '', 'autos');
+
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
+
+$query = "SELECT * FROM autos";
+$result = mysqli_query($conexion, $query);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,7 +20,6 @@ include 'includes/header.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Autos</title>
     <style>
-        /* contrala la estructura de la pagna */
         body,
         html {
             margin: 0;
@@ -21,7 +30,6 @@ include 'includes/header.php';
             font-family: Arial, sans-serif;
         }
 
-        /* Controla todo el contenido */
         .page-wrapper {
             display: flex;
             flex-direction: column;
@@ -34,7 +42,6 @@ include 'includes/header.php';
             text-align: center;
         }
 
-        /* editar las tarjetas */
         .content-wrapper {
             display: flex;
             flex-wrap: wrap;
@@ -70,6 +77,15 @@ include 'includes/header.php';
             color: #666;
             margin-bottom: 15px;
         }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        a:hover h1 {
+            color: blue;
+        }
     </style>
 </head>
 
@@ -78,36 +94,23 @@ include 'includes/header.php';
     <div class="page-wrapper">
 
         <header>
-            <h1>Panel de Administración</h1>
+            <h1>Listado de Autos en Venta</h1>
         </header>
 
-
         <div class="content-wrapper">
-            <div class="card ferrari">
-                <h1>Ferrari</h1>
-                <img src="imagenes/ferrari/principal.webp" alt="Ferrari">
-                <p>La Ferrari es un fabricante italiano de automóviles deportivos de lujo,<br> conocido por su rendimiento excepcional y su diseño icónico.</p>
-            </div>
-
-            <div class="card mercedes">
-                <h1>Mercedes-Benz</h1>
-                <img src="imagenes/mercedes bens/principal.jpg" alt="Mercedes-Benz">
-                <p>Mercedes-Benz es una marca alemana de automóviles de lujo,<br> famosa por su ingeniería avanzada y su compromiso con la calidad y la innovación.</p>
-            </div>
-
-            <div class="card honda">
-                <h1>Honda Civic</h1>
-                <img src="imagenes/honda civic/frente.jpg" alt="Honda Civic">
-                <p>El Honda Civic es un automóvil compacto japonés,<br> conocido por su fiabilidad, eficiencia de combustible y diseño moderno.</p>
-            </div>
-
-            <div class="card ford">
-                <h1>Ford Mustang</h1>
-                <img src="imagenes/fordmustan/frente.jpg" alt="Ford Mustang">
-                <p>El Ford Mustang es un automóvil deportivo icónico estadounidense,<br> conocido por su diseño agresivo y su potente rendimiento.</p>
-            </div>
+            <?php
+            while ($auto = mysqli_fetch_assoc($result)) {
+                echo '<div class="card">';
+                echo '<a href="detalles-auto.php?id=' . $auto['id'] . '">';
+                echo '<h1>' . $auto['Brand'] . ' ' . $auto['Model'] . '</h1>';
+                echo '<img src="imagenes/autos/' . $auto['Image'] . '" alt="' . $auto['Model'] . '">';
+                echo '</a>';
+                echo '<p>' . $auto['Description'] . '</p>';
+                echo '<p>Precio: $' . number_format($auto['Price'], 2) . '</p>';
+                echo '</div>';
+            }
+            ?>
         </div>
-
 
     </div>
 

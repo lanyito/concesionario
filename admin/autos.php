@@ -40,11 +40,11 @@ $resultado = $conexion->query($sql);
             text-align: center;
         }
 
-        /* darle forma ala tabla*/
+        /* darle forma a la tabla*/
         table {
             border-collapse: collapse;
             width: 80%;
-            /* ancho de la tabla */
+            /* ancho pa la  tabla */
             margin: 0 auto;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: white;
@@ -87,7 +87,7 @@ $resultado = $conexion->query($sql);
                         <th>Model</th>
                         <th>Year</th>
                         <th>Price</th>
-                        <th>Descriptions</th>
+                        <th>Description</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -98,10 +98,11 @@ $resultado = $conexion->query($sql);
                             <td><?php echo $auto['Model']; ?></td>
                             <td><?php echo $auto['Year']; ?></td>
                             <td><?php echo $auto['Price']; ?></td>
-                            <td><?php echo $auto['Descriptions']; ?></td>
+                            <td><?php echo $auto['Description']; ?></td>
                             <td>
-                                <a href="editar_auto.php?id=<?php echo $auto['id']; ?>">Editar</a> |
+                                <a href="editar_auto.php?id=<?php echo $auto['id']; ?>">Editar</a>
                                 <a href="eliminar_auto.php?id=<?php echo $auto['id']; ?>">Eliminar</a>
+
                             </td>
                         </tr>
                     <?php endwhile; ?>
